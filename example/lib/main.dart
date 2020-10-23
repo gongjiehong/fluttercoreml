@@ -49,6 +49,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   File imageFile;
+  List<Rect> faceRects = List<Rect>();
+  List<String> imageLabels = List<String>();
   final ImagePicker _picker = ImagePicker();
 
   // 屏幕宽度减去左右间距，实际使用时根据实际宽度处理
@@ -56,6 +58,43 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    var children = List<Widget>();
+    if (imageFile != null) {
+      children.add(
+        Container(
+          width: displayWidth,
+          padding: EdgeInsets.only(
+            left: 0.0,
+            right: 0.0,
+            top: 0.0,
+          ),
+          child: Image.file(
+            imageFile,
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+      );
+    }
+
+    if (faceRects.length > 0) {
+      for (var rect in faceRects) {
+        children.add(
+          Padding(
+            padding: EdgeInsets.only(
+              left: rect.left,
+              top: rect.top,
+            ),
+            child: Container(
+              alignment: Alignment.topLeft,
+              color: Colors.blue.withAlpha(155),
+              width: rect.width,
+              height: rect.height,
+            ),
+          ),
+        );
+      }
+    }
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -70,7 +109,15 @@ class _MyAppState extends State<MyApp> {
                   right: 10.0,
                   top: 10.0,
                 ),
-                child: imageFile != null ? Image.file(imageFile) : null,
+                child: Container(
+                  height: 500,
+                  child: Stack(
+                    children: children,
+                  ),
+                ),
+              ),
+              Center(
+                child: Text(imageLabels.join(",")),
               ),
               Center(
                 child: IconButton(
@@ -90,6 +137,8 @@ class _MyAppState extends State<MyApp> {
   Future<void> chooseImage() async {
     PickedFile pickedImage = await _picker.getImage(
       source: ImageSource.gallery,
+      maxHeight: 600.0,
+      maxWidth: 600.0,
     );
 
     File temp = File(pickedImage.path);
@@ -100,17 +149,26 @@ class _MyAppState extends State<MyApp> {
 
     double displayHeight = imageHeight / (imageWidth / displayWidth);
 
+    print(
+        "imageWidth = $imageWidth, imageHeight = $imageHeight, displayWidth = $displayWidth, displayHeight = $displayHeight");
+
     Uint8List imageData = await pickedImage.readAsBytes();
 
-    var result = await FlutterCoreML().faceDetect(
+    var result = await FlutterCoreML.instance.faceDetect(
       imageData,
       displayWidth,
       displayHeight,
     );
+
+    var labels = await FlutterCoreML.instance.labelDetect(imageData);
+    imageLabels = labels;
+    print(labels);
+
     print(result);
 
     setState(() {
       imageFile = temp;
+      faceRects = result;
     });
   }
 }

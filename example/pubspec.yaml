@@ -31,7 +31,7 @@ dependencies:
     # the parent directory to use the current plugin's version.
     path: ../
   
-  image_picker: ^0.6.0
+  image_picker: ^0.6.7+12
   image_size_getter: ^0.2.1
 
 

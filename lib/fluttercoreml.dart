@@ -31,28 +31,58 @@ class FlutterCoreML {
     double displayHeight,
   ) async {
     if (Platform.isIOS) {
-      return _channel.invokeMethod(
-        "faceDetect",
-        {
-          "imageData": imageInMemory,
-          "displayWidth": displayWidth,
-          "displayHeight": displayHeight,
-        },
-      );
+      try {
+        List<dynamic> results = await _channel.invokeMethod(
+          "faceDetect",
+          {
+            "imageData": imageInMemory,
+            "displayWidth": displayWidth,
+            "displayHeight": displayHeight,
+          },
+        );
+
+        var returnResults = List<Rect>();
+
+        for (var result in results) {
+          var rectArray = result.split(",");
+          returnResults.add(
+            Rect.fromLTWH(
+              double.parse(rectArray[0]),
+              double.parse(rectArray[1]),
+              double.parse(rectArray[2]),
+              double.parse(
+                rectArray[3],
+              ),
+            ),
+          );
+        }
+        return returnResults;
+      } on PlatformException catch (e) {
+        print(e.toString());
+        return List<Rect>();
+      }
     } else {
       return List<Rect>();
     }
   }
 
   Future<List<String>> labelDetect(
-    Int8List imageInMemory,
-    int displayWidth,
-    int displayHeight,
+    Uint8List imageInMemory,
   ) async {
     if (Platform.isIOS) {
-      return _channel.invokeListMethod(
+      List<dynamic> results = await _channel.invokeMethod(
         "labelDetect",
+        {
+          "imageData": imageInMemory,
+        },
       );
+
+      var returnResults = List<String>();
+      for (var item in results) {
+        returnResults.add(item.toString());
+      }
+
+      return returnResults;
     } else {
       return List<String>();
     }

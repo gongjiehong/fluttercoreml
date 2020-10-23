@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,11 @@
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		FE0039A925405223006F1323 /* 5dac1e9e621fa.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE0039A725405223006F1323 /* 5dac1e9e621fa.jpg */; };
 		FE0039AA25405223006F1323 /* imagick35211444382898_y.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE0039A825405223006F1323 /* imagick35211444382898_y.jpg */; };
+		FE85488A2541991000E4ED25 /* FaceDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8548872541991000E4ED25 /* FaceDetect.swift */; };
+		FE85488B2541991000E4ED25 /* FlutterCoreMLPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8548882541991000E4ED25 /* FlutterCoreMLPlugin.swift */; };
+		FE85488C2541991000E4ED25 /* LabelDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8548892541991000E4ED25 /* LabelDetect.swift */; };
+		FE8548902542766A00E4ED25 /* SqueezeNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FE85488F2542766A00E4ED25 /* SqueezeNet.mlmodel */; };
+		FE8A6F262542AC7B0024870E /* MobileNetV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FE8A6F252542AC7B0024870E /* MobileNetV2.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +56,11 @@
 		E5B4EA64A0CF6181B18CCC4F /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		FE0039A725405223006F1323 /* 5dac1e9e621fa.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 5dac1e9e621fa.jpg; sourceTree = "<group>"; };
 		FE0039A825405223006F1323 /* imagick35211444382898_y.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = imagick35211444382898_y.jpg; sourceTree = "<group>"; };
+		FE8548872541991000E4ED25 /* FaceDetect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FaceDetect.swift; path = ../../../ios/Classes/FaceDetect.swift; sourceTree = "<group>"; };
+		FE8548882541991000E4ED25 /* FlutterCoreMLPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlutterCoreMLPlugin.swift; path = ../../../ios/Classes/FlutterCoreMLPlugin.swift; sourceTree = "<group>"; };
+		FE8548892541991000E4ED25 /* LabelDetect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LabelDetect.swift; path = ../../../ios/Classes/LabelDetect.swift; sourceTree = "<group>"; };
+		FE85488F2542766A00E4ED25 /* SqueezeNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SqueezeNet.mlmodel; sourceTree = "<group>"; };
+		FE8A6F252542AC7B0024870E /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MobileNetV2.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +108,11 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				FE85488F2542766A00E4ED25 /* SqueezeNet.mlmodel */,
+				FE8A6F252542AC7B0024870E /* MobileNetV2.mlmodel */,
+				FE8548872541991000E4ED25 /* FaceDetect.swift */,
+				FE8548882541991000E4ED25 /* FlutterCoreMLPlugin.swift */,
+				FE8548892541991000E4ED25 /* LabelDetect.swift */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
@@ -279,8 +294,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE8A6F262542AC7B0024870E /* MobileNetV2.mlmodel in Sources */,
+				FE85488A2541991000E4ED25 /* FaceDetect.swift in Sources */,
+				FE8548902542766A00E4ED25 /* SqueezeNet.mlmodel in Sources */,
+				FE85488C2541991000E4ED25 /* LabelDetect.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				FE85488B2541991000E4ED25 /* FlutterCoreMLPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +389,7 @@
 					"$(PROJECT_DIR)/Flutter",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -499,12 +520,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = SRVW87Y85X;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -529,12 +552,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = SRVW87Y85X;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
